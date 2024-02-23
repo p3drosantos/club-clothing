@@ -11,7 +11,7 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   return (
     <button
-      className="w-full bg-[#212529] text-white flex items-center justify-center rounded-xl shadow-lg border-none py-2 px-3 font-semibold transition-all duration-500 ease-in-out hover:bg-black cursor-pointer"
+      className="w-full bg-primaryDark text-white flex items-center justify-center rounded-xl shadow-lg border-none py-2 px-3 font-semibold transition-all duration-500 ease-in-out hover:bg-black cursor-pointer"
       {...rest}
     >
       {startIcon && (
