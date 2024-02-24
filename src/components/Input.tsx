@@ -7,7 +7,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FunctionComponent<InputProps> = React.forwardRef((props, ref) => {
   return (
-    <div className="flex flex-col mb-5">
+    <div
+      className={`${
+        props.hasError ? "flex flex-col mb-1" : "flex flex-col mb-5"
+      }`}
+    >
       <input
         className={`w-full bg-primaryInput px-5 py-2 shadow-md rounded-xl text-primaryGray ${
           props.hasError
