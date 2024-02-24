@@ -5,6 +5,10 @@ import Input from "../../components/Input";
 import validator from "validator";
 import { useForm } from "react-hook-form";
 import { FiLogIn } from "react-icons/fi";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+
+import { auth, db } from "../../config/firebase.config";
 
 interface SignUpFormData {
   firstName: string;
@@ -22,8 +26,23 @@ const SignUp = () => {
     watch,
   } = useForm<SignUpFormData>();
 
-  const onSubmit = (data: SignUpFormData) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      await addDoc(collection(db, "users"), {
+        id: userCredentials.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const password = watch("password");
