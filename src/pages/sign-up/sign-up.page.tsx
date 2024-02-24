@@ -5,7 +5,11 @@ import Input from "../../components/Input";
 import validator from "validator";
 import { useForm } from "react-hook-form";
 import { FiLogIn } from "react-icons/fi";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  AuthError,
+  createUserWithEmailAndPassword,
+  AuthErrorCodes,
+} from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 
 import { auth, db } from "../../config/firebase.config";
@@ -24,6 +28,7 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setError,
   } = useForm<SignUpFormData>();
 
   const onSubmit = async (data: SignUpFormData) => {
@@ -41,7 +46,13 @@ const SignUp = () => {
         email: data.email,
       });
     } catch (error) {
-      console.log(error);
+      const _error = error as AuthError;
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        return setError("email", {
+          type: "alreadyInUse",
+          message: "E-mail já cadastrado.",
+        });
+      }
     }
   };
 
