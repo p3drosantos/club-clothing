@@ -10,8 +10,10 @@ import {
   signInWithEmailAndPassword,
   AuthErrorCodes,
   AuthError,
+  signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../../config/firebase.config";
+import { auth, db, googleAuthProvider } from "../../config/firebase.config";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
 interface LoginForm {
   email: string;
@@ -46,13 +48,46 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const userCredentials = await signInWithPopup(auth, googleAuthProvider);
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, "users"),
+          where("id", "==", userCredentials.user.uid)
+        )
+      );
+
+      const user = querySnapshot.docs[0]?.data();
+
+      if (!user) {
+        const firstName = userCredentials.user.displayName?.split(" ")[0];
+        const lastName = userCredentials.user.displayName?.split(" ")[1];
+
+        await addDoc(collection(db, "users"), {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+          firstName,
+          lastName,
+          provider: "google",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="flex flex-col h-screen">
       <Header />
       <div className="h-full flex flex-col items-center justify-center ">
         <div className="flex flex-col items-center w-[450px] gap-5">
           <p className=" font-bold text-xl">Entre com a sua conta</p>
-          <Button startIcon={<BsGoogle size={18} />}>
+          <Button
+            onClick={handleGoogleLogin}
+            startIcon={<BsGoogle size={18} />}
+          >
             Entrar com o Google
           </Button>
           <p className=" flex font-medium pb-4 border-b border-solid border-[#6c757d] w-full items-center justify-center">

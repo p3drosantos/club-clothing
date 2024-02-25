@@ -41,9 +41,10 @@ const SignUp = () => {
 
       await addDoc(collection(db, "users"), {
         id: userCredentials.user.uid,
+        email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        provider: "firebase",
       });
     } catch (error) {
       const _error = error as AuthError;
