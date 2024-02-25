@@ -1,6 +1,8 @@
+import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 
 import { useNavigate } from "react-router-dom";
+import { auth } from "../config/firebase.config";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const Header = () => {
         <p>Explorar</p>
         <p onClick={handleLogin}>Login</p>
         <p onClick={handleCreateAccount}>Criar Conta</p>
+        <p onClick={() => signOut(auth)}>Sair</p>
         <div className="flex gap-1">
           <BsCart3 size={24} /> 5
         </div>
