@@ -6,16 +6,44 @@ import validator from "validator";
 import { useForm } from "react-hook-form";
 import { FiLogIn } from "react-icons/fi";
 import { BsGoogle } from "react-icons/bs";
+import {
+  signInWithEmailAndPassword,
+  AuthErrorCodes,
+  AuthError,
+} from "firebase/auth";
+import { auth } from "../../config/firebase.config";
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
 
 const LoginPage = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    setError,
+  } = useForm<LoginForm>();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: LoginForm) => {
+    try {
+      const userCredentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      console.log({ userCredentials });
+    } catch (error) {
+      const _error = error as AuthError;
+      if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+        return setError("email", {
+          type: "invalidCredentials",
+          message: "E-mail ou senha inválidos.",
+        });
+      }
+    }
   };
 
   return (
