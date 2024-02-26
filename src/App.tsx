@@ -1,14 +1,37 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/home/home.page";
 import LoginPage from "./pages/login/login.page";
 import SignUp from "./pages/sign-up/sign-up.page";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./config/firebase.config";
+import { useContext } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+
+import { auth, db } from "./config/firebase.config";
+import { UserContext } from "./contexts/userContext";
 
 function App() {
-  onAuthStateChanged(auth, (user) => {
-    console.log({ user });
+  const { isAuthenticated, loginUser, logoutUser } = useContext(UserContext);
+
+  onAuthStateChanged(auth, async (user) => {
+    const isSigningOut = isAuthenticated && !user;
+    if (isSigningOut) {
+      return logoutUser();
+    }
+
+    const isSigningIn = !isAuthenticated && user;
+
+    if (isSigningIn) {
+      const querySnapshot = await getDocs(
+        query(collection(db, "users"), where("id", "==", user.uid))
+      );
+
+      const useFromFireStore = querySnapshot.docs[0]?.data();
+
+      return loginUser(useFromFireStore as any);
+    }
   });
+
   return (
     <BrowserRouter>
       <Routes>
