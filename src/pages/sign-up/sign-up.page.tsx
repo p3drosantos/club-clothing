@@ -13,6 +13,9 @@ import {
 import { addDoc, collection } from "firebase/firestore";
 
 import { auth, db } from "../../config/firebase.config";
+import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 interface SignUpFormData {
   firstName: string;
@@ -30,6 +33,16 @@ const SignUp = () => {
     watch,
     setError,
   } = useForm<SignUpFormData>();
+
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useContext(UserContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
