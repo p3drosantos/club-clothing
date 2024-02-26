@@ -1,10 +1,14 @@
 import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
-
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+
 import { auth } from "../config/firebase.config";
+import { UserContext } from "../contexts/userContext";
 
 const Header = () => {
+  const { isAuthenticated } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const handleLogin = () => {
@@ -28,9 +32,13 @@ const Header = () => {
       </div>
       <div className="flex gap-6 font-medium hover:cursor-pointer">
         <p>Explorar</p>
-        <p onClick={handleLogin}>Login</p>
-        <p onClick={handleCreateAccount}>Criar Conta</p>
-        <p onClick={() => signOut(auth)}>Sair</p>
+        {!isAuthenticated && (
+          <>
+            <p onClick={handleLogin}>Login</p>
+            <p onClick={handleCreateAccount}>Criar Conta</p>
+          </>
+        )}
+        {isAuthenticated && <p onClick={() => signOut(auth)}>Sair</p>}
         <div className="flex gap-1">
           <BsCart3 size={24} /> 5
         </div>

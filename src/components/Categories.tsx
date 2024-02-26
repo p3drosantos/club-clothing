@@ -19,7 +19,7 @@ const Categories = () => {
         categoriesFromFirestore.push(doc.data());
       });
 
-      console.log({ categoriesFromFirestore });
+      // console.log({ categoriesFromFirestore });
       setCategories(categoriesFromFirestore);
     } catch (error) {
       console.log({ error });
