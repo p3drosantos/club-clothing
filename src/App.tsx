@@ -10,6 +10,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "./config/firebase.config";
 import { UserContext } from "./contexts/userContext";
 import { userConverter } from "./converters/firestore.converters";
+import Loading from "./loading/Loading";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -42,7 +43,7 @@ function App() {
     setIsInitialized(false);
   });
 
-  if (isInitialized) return null;
+  if (isInitialized) return <Loading />;
 
   return (
     <BrowserRouter>
