@@ -15,8 +15,9 @@ import {
 import { auth, db, googleAuthProvider } from "../../config/firebase.config";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
+import Loading from "../../loading/Loading";
 
 interface LoginForm {
   email: string;
@@ -31,6 +32,8 @@ const LoginPage = () => {
     setError,
   } = useForm<LoginForm>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(UserContext);
@@ -43,6 +46,8 @@ const LoginPage = () => {
 
   const onSubmit = async (data: LoginForm) => {
     try {
+      setIsLoading(true);
+
       const userCredentials = await signInWithEmailAndPassword(
         auth,
         data.email,
@@ -58,11 +63,15 @@ const LoginPage = () => {
           message: "E-mail ou senha inválidos.",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
     try {
+      setIsLoading(true);
+
       const userCredentials = await signInWithPopup(auth, googleAuthProvider);
 
       const querySnapshot = await getDocs(
@@ -88,61 +97,69 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex flex-col h-screen">
-      <Header />
-      <div className="h-full flex flex-col items-center justify-center ">
-        <div className="flex flex-col items-center w-[450px] gap-5">
-          <p className=" font-bold text-xl">Entre com a sua conta</p>
-          <Button
-            onClick={handleGoogleLogin}
-            startIcon={<BsGoogle size={18} />}
-          >
-            Entrar com o Google
-          </Button>
-          <p className=" flex font-medium pb-4 border-b border-solid border-[#6c757d] w-full items-center justify-center">
-            ou entre com o seu e-mail
-          </p>
-          <div className="flex flex-col w-full">
-            <p className=" font-semibold mb-1">E-mail</p>
-            <Input
-              type="email"
-              placeholder="Digite seu e-mail"
-              {...register("email", {
-                required: { value: true, message: "e-mail é obrigatório." },
-                validate: (value) =>
-                  validator.isEmail(value) || "e-mail inválido.",
-              })}
-              hasError={!!errors.email}
-              errorMessage={errors.email?.message?.toString()}
-            />
-            <p className=" font-semibold mb-1">Senha</p>
-            <Input
-              type="password"
-              placeholder="Digite sua senha"
-              {...register("password", {
-                required: { value: true, message: "senha é obrigatória." },
-                minLength: {
-                  value: 6,
-                  message: "senha deve ter no mínimo 6 caracteres.",
-                },
-              })}
-              hasError={!!errors.password}
-              errorMessage={errors.password?.message?.toString()}
-            />
+    <>
+      {<Header />}
+
+      {isLoading && <Loading />}
+
+      <div className="flex flex-col h-screen">
+        <div className="h-full flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center w-[450px] gap-5">
+            <p className=" font-bold text-xl">Entre com a sua conta</p>
             <Button
-              onClick={() => handleSubmit(onSubmit)()}
-              startIcon={<FiLogIn size={18} />}
+              onClick={handleGoogleLogin}
+              startIcon={<BsGoogle size={18} />}
             >
-              Entrar
+              Entrar com o Google
             </Button>
+            <p className=" flex font-medium pb-4 border-b border-solid border-[#6c757d] w-full items-center justify-center">
+              ou entre com o seu e-mail
+            </p>
+            <div className="flex flex-col w-full">
+              <p className=" font-semibold mb-1">E-mail</p>
+              <Input
+                type="email"
+                placeholder="Digite seu e-mail"
+                {...register("email", {
+                  required: { value: true, message: "e-mail é obrigatório." },
+                  validate: (value) =>
+                    validator.isEmail(value) || "e-mail inválido.",
+                })}
+                hasError={!!errors.email}
+                errorMessage={errors.email?.message?.toString()}
+              />
+              <p className=" font-semibold mb-1">Senha</p>
+              <Input
+                type="password"
+                placeholder="Digite sua senha"
+                {...register("password", {
+                  required: { value: true, message: "senha é obrigatória." },
+                  minLength: {
+                    value: 6,
+                    message: "senha deve ter no mínimo 6 caracteres.",
+                  },
+                })}
+                hasError={!!errors.password}
+                errorMessage={errors.password?.message?.toString()}
+              />
+              <Button
+                onClick={() => handleSubmit(onSubmit)()}
+                startIcon={<FiLogIn size={18} />}
+              >
+                Entrar
+              </Button>
+            </div>
           </div>
         </div>
+        //{" "}
       </div>
-    </div>
+    </>
   );
 };
 
