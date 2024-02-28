@@ -1,30 +1,12 @@
-import { getDocs, collection } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
-import Category from "../types/category.types";
-import { db } from "../config/firebase.config";
-import { categoryConverter } from "../converters/firestore.converters";
 import CategoryItem from "./CategoryItem";
+import { CategoryContext } from "../contexts/categoryContext";
+import Loading from "../loading/Loading";
 
 const Categories = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
-  const fetchCategories = async () => {
-    try {
-      const categoriesFromFirestore: Category[] = [];
-      const QuerySnapshot = await getDocs(
-        collection(db, "categories").withConverter(categoryConverter)
-      );
-      QuerySnapshot.forEach((doc) => {
-        categoriesFromFirestore.push(doc.data());
-      });
-
-      // console.log({ categoriesFromFirestore });
-      setCategories(categoriesFromFirestore);
-    } catch (error) {
-      console.log({ error });
-    }
-  };
+  const { categories, fetchCategories, isLoading } =
+    useContext(CategoryContext);
 
   useEffect(() => {
     fetchCategories();
@@ -32,6 +14,8 @@ const Categories = () => {
 
   return (
     <div className="h-full w-full">
+      {isLoading && <Loading />}
+
       <div className="grid grid-cols-2 gap-2 p-2 h-[91vh]">
         {/* Renderizar a primeira e segunda fotos */}
         {categories.slice(0, 2).map((category) => (
