@@ -14,8 +14,9 @@ import { addDoc, collection } from "firebase/firestore";
 
 import { auth, db } from "../../config/firebase.config";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
+import Loading from "../../loading/Loading";
 
 interface SignUpFormData {
   firstName: string;
@@ -34,6 +35,8 @@ const SignUp = () => {
     setError,
   } = useForm<SignUpFormData>();
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const { isAuthenticated } = useContext(UserContext);
@@ -46,6 +49,8 @@ const SignUp = () => {
 
   const onSubmit = async (data: SignUpFormData) => {
     try {
+      setIsLoading(true);
+
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
         data.email,
@@ -67,6 +72,8 @@ const SignUp = () => {
           message: "E-mail já cadastrado.",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,6 +82,8 @@ const SignUp = () => {
   return (
     <div className="flex flex-col h-screen">
       <Header />
+
+      {isLoading && <Loading />}
       <div className="h-full flex flex-col items-center justify-center">
         <div className="flex flex-col items-center w-[450px] gap-4">
           <p className="border-b border-solid border-primaryGray text-xl font-bold w-full items-center justify-center flex pb-5">
