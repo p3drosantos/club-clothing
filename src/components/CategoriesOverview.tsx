@@ -9,6 +9,8 @@ const CategoriesOverView = () => {
     if (categories.length === 0) {
       fetchCategories();
     }
+
+    fetchCategories();
   }, []);
 
   return (
