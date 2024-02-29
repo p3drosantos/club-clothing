@@ -16,7 +16,7 @@ const Categories = () => {
     <div className="h-full w-full">
       {isLoading && <Loading />}
 
-      <div className="grid grid-cols-2 gap-2 p-2 h-[91vh]">
+      <div className="grid grid-cols-2 gap-4 py-[20px] px-[30px] h-[91vh]">
         {/* Renderizar a primeira e segunda fotos */}
         {categories.slice(0, 2).map((category) => (
           <CategoryItem key={category.id} category={category} />
