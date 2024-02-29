@@ -23,6 +23,10 @@ const Header = () => {
     navigate("/sign-up");
   };
 
+  const handleExplore = () => {
+    navigate("/explore");
+  };
+
   return (
     <div className="flex justify-between px-3 py-4 bg-[#212529] text-white items-center ">
       <div className="hover:cursor-pointer">
@@ -31,7 +35,7 @@ const Header = () => {
         </h2>
       </div>
       <div className="flex gap-6 font-medium hover:cursor-pointer">
-        <p>Explorar</p>
+        <p onClick={handleExplore}>Explorar</p>
         {!isAuthenticated && (
           <>
             <p onClick={handleLogin}>Login</p>
