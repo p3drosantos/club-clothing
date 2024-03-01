@@ -1,18 +1,19 @@
 import HomePage from "./pages/home/home.page";
 import LoginPage from "./pages/login/login.page";
 import SignUp from "./pages/sign-up/sign-up.page";
+import ExplorePage from "./pages/explore/explore.page";
+import CategoryDetailsPage from "./pages/category-details/category-details.page";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { useContext, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
-
 import { auth, db } from "./config/firebase.config";
 import { UserContext } from "./contexts/userContext";
 import { userConverter } from "./converters/firestore.converters";
+
 import Loading from "./loading/Loading";
-import ExplorePage from "./pages/explore/explore.page";
-import CategoryDetailsPage from "./pages/category-details/category-details.page";
+import Cart from "./components/Cart";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -56,6 +57,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUp />} />
       </Routes>
+      <Cart />
     </BrowserRouter>
   );
 }

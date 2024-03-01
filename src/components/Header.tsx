@@ -5,9 +5,11 @@ import { useContext } from "react";
 
 import { auth } from "../config/firebase.config";
 import { UserContext } from "../contexts/userContext";
+import { CartContext } from "../contexts/cartContext";
 
 const Header = () => {
   const { isAuthenticated } = useContext(UserContext);
+  const { toggleCart } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -44,7 +46,7 @@ const Header = () => {
         )}
         {isAuthenticated && <p onClick={() => signOut(auth)}>Sair</p>}
         <div className="flex gap-1">
-          <BsCart3 size={24} /> 5
+          <BsCart3 onClick={toggleCart} size={24} /> 5
         </div>
       </div>
     </div>
