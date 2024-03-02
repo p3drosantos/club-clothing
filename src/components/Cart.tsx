@@ -4,9 +4,11 @@ import { CartContext } from "../contexts/cartContext";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 
 import Button from "./Button";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const { isOpen, toggleCart } = useContext(CartContext);
+  const { products } = useContext(CartContext);
 
   return (
     <div
@@ -17,7 +19,9 @@ const Cart = () => {
       <div onClick={toggleCart} className="w-full"></div>
       <div className="h-full min-w-[500px] z-200 bg-white p-5 overflow-scroll">
         <p className=" font-bold text-xl mb-4">Seu Carrinho</p>
-        {/* items do carrinho */}
+        {products.map((product) => (
+          <CartItem product={product} />
+        ))}
         <p className="font-bold text-lg mb-4">Total:R$1000</p>
 
         <Button startIcon={<MdOutlineShoppingCartCheckout />}>
