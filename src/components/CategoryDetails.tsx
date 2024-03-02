@@ -66,7 +66,7 @@ const CategoryDetails = ({ categoryId }: CategoryDetailsProps) => {
           Explorar {category?.displayName}
         </p>
       </div>
-      <div className="grid grid-cols-4 justify-items-start  gap-5 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 justify-items-center mt-5 gap-y-10">
         {category?.products.map((product) => (
           <div>
             <ProductItem product={product} />
