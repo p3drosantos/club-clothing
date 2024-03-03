@@ -9,7 +9,8 @@ interface CartItemProps {
 }
 
 const CartItem = ({ product }: CartItemProps) => {
-  const { removeProduct, increaseProductQuantity } = useContext(CartContext);
+  const { removeProduct, increaseProductQuantity, decreaseProductQuantity } =
+    useContext(CartContext);
 
   const handleRemoveProduct = () => {
     removeProduct(product.id);
@@ -17,6 +18,10 @@ const CartItem = ({ product }: CartItemProps) => {
 
   const handleIncreaseProductQuantity = () => {
     increaseProductQuantity(product.id);
+  };
+
+  const handleDecreaseProductQuantity = () => {
+    decreaseProductQuantity(product.id);
   };
 
   return (
@@ -32,7 +37,10 @@ const CartItem = ({ product }: CartItemProps) => {
         <p className=" text-base font-bold">{product.name}</p>
         <p className="text-base font-semibold">R${product.price}</p>
         <div className="flex mt-2 items-center">
-          <AiOutlineMinus className="text-xl cursor-pointer" />
+          <AiOutlineMinus
+            onClick={handleDecreaseProductQuantity}
+            className="text-xl cursor-pointer"
+          />
           <p className="px-2">{product.quantity}</p>
           <AiOutlinePlus
             onClick={handleIncreaseProductQuantity}
