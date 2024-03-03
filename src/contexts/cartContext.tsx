@@ -8,6 +8,7 @@ interface ICartContext {
   isOpen: boolean;
   toggleCart: () => void;
   addProduct: (product: Product) => void;
+  removeProduct: (productId: string) => void;
 }
 
 export const CartContext = createContext<ICartContext>({
@@ -15,6 +16,7 @@ export const CartContext = createContext<ICartContext>({
   isOpen: false,
   toggleCart: () => {},
   addProduct: () => {},
+  removeProduct: () => {},
 });
 
 interface CartProviderProps {
@@ -47,8 +49,16 @@ const CartContextProvider = ({ children }: CartProviderProps) => {
     });
   };
 
+  const removeProduct = (productId: string) => {
+    setProducts((prevState) =>
+      prevState.filter((cartProduct) => cartProduct.id !== productId)
+    );
+  };
+
   return (
-    <CartContext.Provider value={{ products, isOpen, toggleCart, addProduct }}>
+    <CartContext.Provider
+      value={{ products, isOpen, toggleCart, addProduct, removeProduct }}
+    >
       {children}
     </CartContext.Provider>
   );

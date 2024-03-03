@@ -1,12 +1,20 @@
+import { useContext } from "react";
 import CartProduct from "../types/cart.types";
 
 import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from "react-icons/ai";
+import { CartContext } from "../contexts/cartContext";
 
 interface CartItemProps {
   product: CartProduct;
 }
 
 const CartItem = ({ product }: CartItemProps) => {
+  const { removeProduct } = useContext(CartContext);
+
+  const handleRemoveProduct = () => {
+    removeProduct(product.id);
+  };
+
   return (
     <div className="flex w-full py-2">
       <div>
@@ -26,7 +34,10 @@ const CartItem = ({ product }: CartItemProps) => {
         </div>
       </div>
       <div className="flex items-center justify-center">
-        <AiOutlineClose className="text-xl  cursor-pointer" />
+        <AiOutlineClose
+          onClick={handleRemoveProduct}
+          className="text-xl cursor-pointer"
+        />
       </div>
     </div>
   );
