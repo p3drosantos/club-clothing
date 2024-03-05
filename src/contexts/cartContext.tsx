@@ -6,6 +6,8 @@ import Product from "../types/product.types";
 interface ICartContext {
   products: CartProduct[];
   isOpen: boolean;
+  totalPriceProducts: number;
+  totalItems: number;
   toggleCart: () => void;
   addProduct: (product: Product) => void;
   removeProduct: (productId: string) => void;
@@ -16,6 +18,8 @@ interface ICartContext {
 export const CartContext = createContext<ICartContext>({
   products: [],
   isOpen: false,
+  totalPriceProducts: 0,
+  totalItems: 0,
   toggleCart: () => {},
   addProduct: () => {},
   removeProduct: () => {},
@@ -81,11 +85,23 @@ const CartContextProvider = ({ children }: CartProviderProps) => {
     );
   };
 
+  const totalPriceProducts = products.reduce(
+    (acc, product) => acc + product.price * product.quantity,
+    0
+  );
+
+  const totalItems = products.reduce(
+    (acc, product) => acc + product.quantity,
+    0
+  );
+
   return (
     <CartContext.Provider
       value={{
         products,
         isOpen,
+        totalPriceProducts,
+        totalItems,
         toggleCart,
         addProduct,
         removeProduct,
