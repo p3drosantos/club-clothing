@@ -2,13 +2,14 @@ import { useContext } from "react";
 import { CartContext } from "../contexts/cartContext";
 
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { IoMdClose } from "react-icons/io";
 
 import Button from "./Button";
 import CartItem from "./CartItem";
 
 const Cart = () => {
   const { isOpen, toggleCart } = useContext(CartContext);
-  const { products } = useContext(CartContext);
+  const { products, totalPriceProducts } = useContext(CartContext);
 
   return (
     <div
@@ -18,15 +19,46 @@ const Cart = () => {
     >
       <div onClick={toggleCart} className="w-full"></div>
       <div className="h-full min-w-[500px] z-200 bg-white p-5 overflow-scroll">
-        <p className=" font-bold text-xl mb-4">Seu Carrinho</p>
-        {products.map((product) => (
-          <CartItem product={product} />
-        ))}
-        <p className="font-bold text-lg mb-4">Total:R$1000</p>
+        {products.length === 0 ? (
+          <>
+            <div className="flex justify-between items-center mb-4">
+              <p className=" font-bold text-xl">Seu Carrinho</p>
+              <p onClick={toggleCart} className="hover:cursor-pointer">
+                <IoMdClose size={25} />
+              </p>
+            </div>
+            <div className="flex flex-col items-center justify-center h-full">
+              <img
+                src="/Cart-Image.png"
+                alt="empty-cart"
+                className="h-[180px]"
+              />
+              <p className="font-semibold text-xl">
+                O carrinho de compras está vazio.
+              </p>
+              <p>faça login para ver o seu carrinho e comece a comprar.</p>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex justify-between items-center mb-4">
+              <p className=" font-bold text-xl">Seu Carrinho</p>
+              <p onClick={toggleCart} className="hover:cursor-pointer">
+                <IoMdClose size={25} />
+              </p>
+            </div>
+            {products.map((product) => (
+              <CartItem product={product} />
+            ))}
+            <p className="font-bold text-lg mb-4 mt-1">
+              Total:R${totalPriceProducts}
+            </p>
 
-        <Button startIcon={<MdOutlineShoppingCartCheckout />}>
-          ir para o Checkout
-        </Button>
+            <Button startIcon={<MdOutlineShoppingCartCheckout />}>
+              ir para o Checkout
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );
