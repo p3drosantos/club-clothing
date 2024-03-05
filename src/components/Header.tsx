@@ -9,7 +9,7 @@ import { CartContext } from "../contexts/cartContext";
 
 const Header = () => {
   const { isAuthenticated } = useContext(UserContext);
-  const { toggleCart } = useContext(CartContext);
+  const { toggleCart, totalItems } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ const Header = () => {
         )}
         {isAuthenticated && <p onClick={() => signOut(auth)}>Sair</p>}
         <div className="flex gap-1">
-          <BsCart3 onClick={toggleCart} size={24} /> 5
+          <BsCart3 onClick={toggleCart} size={24} /> {totalItems}
         </div>
       </div>
     </div>
