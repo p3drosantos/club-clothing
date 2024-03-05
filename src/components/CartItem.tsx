@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import CartProduct from "../types/cart.types";
 
-import { AiOutlinePlus, AiOutlineMinus, AiOutlineClose } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { RiDeleteBin6Line } from "react-icons/ri";
+
 import { CartContext } from "../contexts/cartContext";
 
 interface CartItemProps {
@@ -49,7 +51,7 @@ const CartItem = ({ product }: CartItemProps) => {
         </div>
       </div>
       <div className="flex items-center justify-center">
-        <AiOutlineClose
+        <RiDeleteBin6Line
           onClick={handleRemoveProduct}
           className="text-xl cursor-pointer"
         />
