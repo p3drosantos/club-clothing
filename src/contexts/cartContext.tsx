@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import CartProduct from "../types/cart.types";
 import Product from "../types/product.types";
@@ -31,9 +31,24 @@ interface CartProviderProps {
   children: React.ReactNode;
 }
 
+const PRODUCTS_STORAGE_KEY = "@fsw-store/products";
+
 const CartContextProvider = ({ children }: CartProviderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [products, setProducts] = useState<CartProduct[]>([]);
+
+  useEffect(() => {
+    const localProductsCart = localStorage.getItem(PRODUCTS_STORAGE_KEY);
+    if (localProductsCart) {
+      setProducts(JSON.parse(localProductsCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(products));
+    }, 0);
+  }, [products]);
 
   const toggleCart = () => {
     setIsOpen((prevState) => !prevState);
