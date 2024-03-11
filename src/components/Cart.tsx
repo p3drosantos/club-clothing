@@ -6,10 +6,18 @@ import { IoMdClose } from "react-icons/io";
 
 import Button from "./Button";
 import CartItem from "./CartItem";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { isOpen, toggleCart } = useContext(CartContext);
-  const { products, totalPriceProducts } = useContext(CartContext);
+  const { isOpen, toggleCart, products, totalPriceProducts } =
+    useContext(CartContext);
+
+  const navigate = useNavigate();
+
+  const handleGoToCheckout = () => {
+    navigate("/checkout");
+    toggleCart();
+  };
 
   return (
     <div
@@ -54,7 +62,10 @@ const Cart = () => {
               Total:R${totalPriceProducts}
             </p>
 
-            <Button startIcon={<MdOutlineShoppingCartCheckout />}>
+            <Button
+              startIcon={<MdOutlineShoppingCartCheckout />}
+              onClick={handleGoToCheckout}
+            >
               ir para o Checkout
             </Button>
           </>
