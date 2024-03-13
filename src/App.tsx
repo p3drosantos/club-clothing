@@ -15,6 +15,7 @@ import { userConverter } from "./converters/firestore.converters";
 import Loading from "./loading/Loading";
 import Cart from "./components/Cart";
 import CheckouPage from "./pages/checkout/checkout.page";
+import GuardAuthentication from "./guards/guards.authentication";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -57,7 +58,14 @@ function App() {
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/checkout" element={<CheckouPage />} />
+        <Route
+          path="/checkout"
+          element={
+            <GuardAuthentication>
+              <CheckouPage />
+            </GuardAuthentication>
+          }
+        />
       </Routes>
       <Cart />
     </BrowserRouter>
