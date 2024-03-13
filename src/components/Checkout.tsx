@@ -1,41 +1,68 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../contexts/cartContext";
 import CartItem from "./CartItem";
 import Button from "./Button";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
+import axios from "axios";
+import Loading from "../loading/Loading";
 
 const Checkout = () => {
+  const [loading, setLoading] = useState(false);
+
   const { products, totalPriceProducts } = useContext(CartContext);
 
+  const handleFinishPurchaseClick = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_API_URL}/create-checkout-session`,
+        {
+          products,
+        }
+      );
+      window.location.href = data.url;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center py-8 overflow-hidden">
-      <p className=" text-xl font-bold">Checkout</p>
-      {products.length > 0 ? (
-        <>
-          <div
-            className={`min-w-[650px] h-[480px] overflow-y-scroll my-4 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scrollbar ${
-              products.length <= 2 && "scrollbar-none"
-            }`}
-          >
-            {products.map((product) => (
-              <CartItem key={product.id} product={product} />
-            ))}
+    <>
+      {loading && <Loading />}
+      <div className="flex flex-col items-center py-8 overflow-hidden">
+        <p className=" text-xl font-bold">Checkout</p>
+        {products.length > 0 ? (
+          <>
+            <div
+              className={`min-w-[650px] h-[480px] overflow-y-scroll my-4 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scrollbar ${
+                products.length <= 2 && "scrollbar-none"
+              }`}
+            >
+              {products.map((product) => (
+                <CartItem key={product.id} product={product} />
+              ))}
+            </div>
+            <div className="flex flex-col min-w-[650px]">
+              <p className="text-xl font-bold pb-5">
+                Total: ${totalPriceProducts}
+              </p>
+              <Button
+                onClick={handleFinishPurchaseClick}
+                startIcon={<MdOutlineShoppingCartCheckout />}
+              >
+                Finalizar Compra
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="flex items-center justify-center w-[500px} h-[500px]">
+            <p className=" font-normal text-xl">Seu carrinho está vazio!</p>
           </div>
-          <div className="flex flex-col min-w-[650px]">
-            <p className="text-xl font-bold pb-5">
-              Total: ${totalPriceProducts}
-            </p>
-            <Button startIcon={<MdOutlineShoppingCartCheckout />}>
-              Finalizar Compra
-            </Button>
-          </div>
-        </>
-      ) : (
-        <div className="flex items-center justify-center w-[500px} h-[500px]">
-          <p className=" font-normal text-xl">Seu carrinho está vazio!</p>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 
