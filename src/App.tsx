@@ -16,6 +16,7 @@ import Loading from "./loading/Loading";
 import Cart from "./components/Cart";
 import CheckouPage from "./pages/checkout/checkout.page";
 import GuardAuthentication from "./guards/guards.authentication";
+import PaymentConfirmation from "./pages/payment-confirmation/payment-confirmation.page";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -56,6 +57,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/explore" element={<ExplorePage />} />
         <Route path="/category/:id" element={<CategoryDetailsPage />} />
+        <Route path="payment-confirmation" element={<PaymentConfirmation />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route

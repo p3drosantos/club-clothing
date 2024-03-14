@@ -8,6 +8,8 @@ export default {
         primaryLight: "#f8f9fa",
         primaryGray: "#6C757D",
         primaryInput: "#E9ECEF",
+        success: "#198754",
+        error: "#FF6A6A",
         blackrgba: "rgba(0, 0, 0, 0.5)",
         textColor: {
           white: "#ffffff",
