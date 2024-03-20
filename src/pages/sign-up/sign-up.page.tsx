@@ -14,9 +14,10 @@ import { addDoc, collection } from "firebase/firestore";
 
 import { auth, db } from "../../config/firebase.config";
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/userContext";
+import { useEffect, useState } from "react";
+
 import Loading from "../../loading/Loading";
+import { useSelector } from "react-redux";
 
 interface SignUpFormData {
   firstName: string;
@@ -39,7 +40,9 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const { isAuthenticated } = useContext(UserContext);
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer
+  );
 
   useEffect(() => {
     if (isAuthenticated) {
