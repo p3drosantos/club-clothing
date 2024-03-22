@@ -2,10 +2,11 @@ import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { auth } from "../config/firebase.config";
 import { CartContext } from "../contexts/cartContext";
-import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../store/reducers/user/user.action";
 
 const Header = () => {
   const { isAuthenticated } = useSelector(
@@ -35,7 +36,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     signOut(auth);
-    dispatch({ type: "LOGOUT_USER" });
+    dispatch(logoutUser());
   };
 
   return (

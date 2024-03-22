@@ -3,23 +3,24 @@ import LoginPage from "./pages/login/login.page";
 import SignUp from "./pages/sign-up/sign-up.page";
 import ExplorePage from "./pages/explore/explore.page";
 import CategoryDetailsPage from "./pages/category-details/category-details.page";
+import CheckouPage from "./pages/checkout/checkout.page";
+import PaymentConfirmation from "./pages/payment-confirmation/payment-confirmation.page";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "./config/firebase.config";
+import { loginUser, logoutUser } from "./store/reducers/user/user.action";
+import GuardAuthentication from "./guards/guards.authentication";
 
 import { userConverter } from "./converters/firestore.converters";
-
-import Loading from "./loading/Loading";
-import Cart from "./components/Cart";
-import CheckouPage from "./pages/checkout/checkout.page";
-import GuardAuthentication from "./guards/guards.authentication";
-import PaymentConfirmation from "./pages/payment-confirmation/payment-confirmation.page";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+
+import Loading from "./loading/Loading";
+import Cart from "./components/Cart";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -34,7 +35,7 @@ function App() {
     onAuthStateChanged(auth, async (user) => {
       const isSigningOut = isAuthenticated && !user;
       if (isSigningOut) {
-        dispatch({ type: "LOGOUT_USER" });
+        dispatch(logoutUser());
 
         return setIsInitialized(false);
       }
@@ -51,7 +52,7 @@ function App() {
 
         const useFromFireStore = querySnapshot.docs[0]?.data();
 
-        dispatch({ type: "LOGIN_USER", payload: useFromFireStore });
+        dispatch(loginUser(useFromFireStore));
 
         return setIsInitialized(false);
       }
