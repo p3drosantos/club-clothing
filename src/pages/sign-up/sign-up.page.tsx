@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import Loading from "../../loading/Loading";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/redux.hooks";
 
 interface SignUpFormData {
   firstName: string;
@@ -40,8 +40,8 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   );
 
   useEffect(() => {

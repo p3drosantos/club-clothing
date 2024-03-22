@@ -16,26 +16,26 @@ import GuardAuthentication from "./guards/guards.authentication";
 
 import { userConverter } from "./converters/firestore.converters";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
 import Loading from "./loading/Loading";
 import Cart from "./components/Cart";
+import { useAppSelector } from "./hooks/redux.hooks";
 
 function App() {
   const [isInitialized, setIsInitialized] = useState(true);
 
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   );
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       const isSigningOut = isAuthenticated && !user;
       if (isSigningOut) {
-        dispatch(logoutUser());
+        dispatch(logoutUser() as any);
 
         return setIsInitialized(false);
       }
@@ -52,7 +52,7 @@ function App() {
 
         const useFromFireStore = querySnapshot.docs[0]?.data();
 
-        dispatch(loginUser(useFromFireStore));
+        dispatch(loginUser(useFromFireStore) as any); // Add 'as any' to fix the type error
 
         return setIsInitialized(false);
       }

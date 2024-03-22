@@ -2,15 +2,16 @@ import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { auth } from "../config/firebase.config";
 import { CartContext } from "../contexts/cartContext";
 import { logoutUser } from "../store/reducers/user/user.action";
+import { useAppSelector } from "../hooks/redux.hooks";
 
 const Header = () => {
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer
   );
   const { toggleCart, totalItems } = useContext(CartContext);
 
@@ -36,7 +37,7 @@ const Header = () => {
 
   const handleSignOut = () => {
     signOut(auth);
-    dispatch(logoutUser());
+    dispatch(logoutUser() as any);
   };
 
   return (
