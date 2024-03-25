@@ -8,12 +8,13 @@ import { auth } from "../config/firebase.config";
 import { CartContext } from "../contexts/cartContext";
 import { logoutUser } from "../store/reducers/user/user.action";
 import { useAppSelector } from "../hooks/redux.hooks";
+import { toggleCart } from "../store/reducers/cart/cart.action";
 
 const Header = () => {
   const { isAuthenticated } = useAppSelector(
     (rootReducer) => rootReducer.userReducer
   );
-  const { toggleCart, totalItems } = useContext(CartContext);
+  const { totalItems } = useContext(CartContext);
 
   const navigate = useNavigate();
 
@@ -39,6 +40,9 @@ const Header = () => {
     signOut(auth);
     dispatch(logoutUser() as any);
   };
+  const handleCartClick = () => {
+    dispatch(toggleCart() as any);
+  };
 
   return (
     <div className="flex justify-between px-3 py-4 bg-[#212529] text-white items-center ">
@@ -57,7 +61,7 @@ const Header = () => {
         )}
         {isAuthenticated && <p onClick={handleSignOut}>Sair</p>}
         <div className="flex gap-1">
-          <BsCart3 onClick={toggleCart} size={24} /> {totalItems}
+          <BsCart3 onClick={handleCartClick} size={24} /> {totalItems}
         </div>
       </div>
     </div>

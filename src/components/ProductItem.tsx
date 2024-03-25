@@ -3,8 +3,8 @@ import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import Product from "../types/product.types";
 
 import Button from "./Button";
-import { useContext } from "react";
-import { CartContext } from "../contexts/cartContext";
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "../store/reducers/cart/cart.action";
 
 interface ProductItemProps {
   product: Product;
@@ -22,10 +22,10 @@ const ProductItem = ({ product }: ProductItemProps) => {
     // Definir altura como 100% h-[380px] w-[300px]
   };
 
-  const { addProduct } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const handleAddProduct = () => {
-    addProduct(product);
+    dispatch(addProductToCart(product) as any);
   };
 
   return (

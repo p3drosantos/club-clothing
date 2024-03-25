@@ -7,16 +7,27 @@ import { IoMdClose } from "react-icons/io";
 import Button from "./Button";
 import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../hooks/redux.hooks";
+import { useDispatch } from "react-redux";
+import { toggleCart } from "../store/reducers/cart/cart.action";
 
 const Cart = () => {
-  const { isOpen, toggleCart, products, totalPriceProducts } =
-    useContext(CartContext);
+  const { isOpen, products } = useAppSelector(
+    (rootReducer) => rootReducer.cartReducer
+  );
+  const { totalPriceProducts } = useContext(CartContext);
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   const handleGoToCheckout = () => {
     navigate("/checkout");
-    toggleCart();
+    dispatch(toggleCart() as any);
+  };
+
+  const handleEscapeAreaClick = () => {
+    dispatch(toggleCart() as any);
   };
 
   return (
@@ -25,7 +36,7 @@ const Cart = () => {
         isOpen ? "opacity-100 visible " : "opacity-0 hidden"
       }`}
     >
-      <div onClick={toggleCart} className="w-full"></div>
+      <div onClick={handleEscapeAreaClick} className="w-full"></div>
       <div className="h-full min-w-[500px] z-200 bg-white p-5 overflow-scroll">
         {products.length === 0 ? (
           <>
