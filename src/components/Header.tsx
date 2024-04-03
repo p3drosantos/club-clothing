@@ -1,20 +1,19 @@
 import { signOut } from "firebase/auth";
 import { BsCart3 } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { useDispatch } from "react-redux";
 
 import { auth } from "../config/firebase.config";
-import { CartContext } from "../contexts/cartContext";
 import { logoutUser } from "../store/reducers/user/user.action";
 import { useAppSelector } from "../hooks/redux.hooks";
 import { toggleCart } from "../store/reducers/cart/cart.action";
+import { selectProductsCount } from "../store/reducers/cart/cart.selectors";
 
 const Header = () => {
   const { isAuthenticated } = useAppSelector(
     (rootReducer) => rootReducer.userReducer
   );
-  const { totalItems } = useContext(CartContext);
+  const totalItems = useAppSelector(selectProductsCount);
 
   const navigate = useNavigate();
 

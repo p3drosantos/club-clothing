@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { CartContext } from "../contexts/cartContext";
-
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 
@@ -10,12 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux.hooks";
 import { useDispatch } from "react-redux";
 import { toggleCart } from "../store/reducers/cart/cart.action";
+import { selectProductsTotalPrice } from "../store/reducers/cart/cart.selectors";
 
 const Cart = () => {
   const { isOpen, products } = useAppSelector(
     (rootReducer) => rootReducer.cartReducer
   );
-  const { totalPriceProducts } = useContext(CartContext);
+
+  const productsTotalPrice = useAppSelector(selectProductsTotalPrice);
 
   const navigate = useNavigate();
 
@@ -70,7 +69,7 @@ const Cart = () => {
               <CartItem product={product} />
             ))}
             <p className="font-bold text-lg mb-4 mt-1">
-              Total:R${totalPriceProducts}
+              Total:R${productsTotalPrice}
             </p>
 
             <Button

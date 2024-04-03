@@ -3,16 +3,12 @@ import CartActionTypes from "./cart.action-types";
 
 interface InitialState {
   isOpen: boolean;
-  productsTotalPrice: number;
-  productsCount: number;
   products: CartProduct[];
 }
 
 const initialState: InitialState = {
   isOpen: false,
   products: [],
-  productsTotalPrice: 0,
-  productsCount: 0,
 };
 
 const cartReducer = (state = initialState, action: any) => {
