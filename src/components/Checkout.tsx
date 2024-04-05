@@ -1,15 +1,17 @@
-import { useContext, useState } from "react";
-import { CartContext } from "../contexts/cartContext";
+import { useState } from "react";
 import CartItem from "./CartItem";
 import Button from "./Button";
 import { MdOutlineShoppingCartCheckout } from "react-icons/md";
 import axios from "axios";
 import Loading from "../loading/Loading";
+import { useAppSelector } from "../hooks/redux.hooks";
+import { selectProductsTotalPrice } from "../store/reducers/cart/cart.selectors";
 
 const Checkout = () => {
-  const [loading, setLoading] = useState(false);
+  const { products } = useAppSelector((state) => state.cartReducer);
+  const totalPriceProducts = useAppSelector(selectProductsTotalPrice);
 
-  const { products, totalPriceProducts } = useContext(CartContext);
+  const [loading, setLoading] = useState(false);
 
   const handleFinishPurchaseClick = async () => {
     try {
