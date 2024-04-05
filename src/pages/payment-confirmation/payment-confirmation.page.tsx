@@ -7,11 +7,12 @@ import {
 } from "react-icons/ai";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
-import { CartContext } from "../../contexts/cartContext";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { clearCartProducts } from "../../store/reducers/cart/cart.action";
 
 const PaymentConfirmation = () => {
-  const { clearProducts } = useContext(CartContext);
+  const dispatch = useDispatch();
 
   const [SearchParams] = useSearchParams();
 
@@ -20,9 +21,9 @@ const PaymentConfirmation = () => {
 
   useEffect(() => {
     if (status === "true") {
-      clearProducts();
+      dispatch(clearCartProducts());
     }
-  }, [status, clearProducts]);
+  }, [status, dispatch]);
 
   const navigate = useNavigate();
 

@@ -1,29 +1,32 @@
-import { useContext } from "react";
 import CartProduct from "../types/cart.types";
 
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-import { CartContext } from "../contexts/cartContext";
+import { useDispatch } from "react-redux";
+import {
+  decreaseCartProductQuantity,
+  increaseCartProductQuantity,
+  removeProductFromCart,
+} from "../store/reducers/cart/cart.action";
 
 interface CartItemProps {
   product: CartProduct;
 }
 
 const CartItem = ({ product }: CartItemProps) => {
-  const { removeProduct, increaseProductQuantity, decreaseProductQuantity } =
-    useContext(CartContext);
+  const dispatch = useDispatch();
 
   const handleRemoveProduct = () => {
-    removeProduct(product.id);
+    dispatch(removeProductFromCart(product.id));
   };
 
   const handleIncreaseProductQuantity = () => {
-    increaseProductQuantity(product.id);
+    dispatch(increaseCartProductQuantity(product.id));
   };
 
   const handleDecreaseProductQuantity = () => {
-    decreaseProductQuantity(product.id);
+    dispatch(decreaseCartProductQuantity(product.id));
   };
 
   return (

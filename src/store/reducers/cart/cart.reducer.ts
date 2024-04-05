@@ -43,6 +43,46 @@ const cartReducer = (state = initialState, action: any) => {
       };
     }
 
+    case CartActionTypes.removeProductFromCart: {
+      const productId = action.payload;
+
+      return {
+        ...state,
+        products: state.products.filter((item) => item.id !== productId),
+      };
+    }
+
+    case CartActionTypes.increaseCartProductQuantity: {
+      const productId = action.payload;
+
+      return {
+        ...state,
+        products: state.products.map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        ),
+      };
+    }
+
+    case CartActionTypes.decreaseCartProductQuantity: {
+      const productId = action.payload;
+
+      return {
+        ...state,
+        products: state.products
+          .map((item) =>
+            item.id === productId
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )
+          .filter((item) => item.quantity > 0),
+      };
+    }
+
+    case CartActionTypes.clearCartProducts:
+      return { ...state, products: [] };
+
     default:
       return { ...state };
   }
