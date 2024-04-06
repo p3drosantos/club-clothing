@@ -1,4 +1,5 @@
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import { thunk } from "redux-thunk";
 
 import rootReducer from "./root-reducer";
 // @ts-ignore
@@ -19,7 +20,10 @@ const persistedRootReducer: typeof rootReducer = persistReducer(
   rootReducer
 );
 
-export const store = createStore(persistedRootReducer);
+export const store = createStore(
+  persistedRootReducer,
+  applyMiddleware(thunk) as any
+);
 export const persistedStore = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
