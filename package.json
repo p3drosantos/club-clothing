@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.2.3",
     "@types/validator": "^13.11.9",
     "axios": "^1.6.7",
     "firebase": "^10.6.0",

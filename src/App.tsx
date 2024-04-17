@@ -11,7 +11,7 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { auth, db } from "./config/firebase.config";
-import { loginUser, logoutUser } from "./store/reducers/user/user.action";
+import { loginUser, logoutUser } from "./store/toolkit/user/user.slice";
 import GuardAuthentication from "./guards/guards.authentication";
 
 import { userConverter } from "./converters/firestore.converters";

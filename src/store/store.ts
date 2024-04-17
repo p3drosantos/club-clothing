@@ -1,4 +1,5 @@
-import { applyMiddleware, createStore } from "redux";
+// import { applyMiddleware, createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 import { thunk } from "redux-thunk";
 
 import rootReducer from "./root-reducer";
@@ -20,10 +21,16 @@ const persistedRootReducer: typeof rootReducer = persistReducer(
   rootReducer
 );
 
-export const store = createStore(
-  persistedRootReducer,
-  applyMiddleware(thunk) as any
-);
+// export const store = createStore(
+//   persistedRootReducer,
+//   applyMiddleware(thunk) as any
+// );
+
+export const store = configureStore({
+  reducer: persistedRootReducer,
+  middleware: [thunk] as any,
+});
+
 export const persistedStore = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
