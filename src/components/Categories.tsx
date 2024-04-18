@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import CategoryItem from "./CategoryItem";
 import Loading from "../loading/Loading";
 import { useDispatch } from "react-redux";
-import { fetchCategories } from "../store/reducers/category/category.actions";
+import { fetchCategories } from "../store/toolkit/category/category.slice";
 import { useAppSelector } from "../hooks/redux.hooks";
 import Category from "../types/category.types";
 
