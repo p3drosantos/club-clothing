@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { auth } from "../config/firebase.config";
 import { logoutUser } from "../store/toolkit/user/user.slice";
 import { useAppSelector } from "../hooks/redux.hooks";
-import { toggleCart } from "../store/reducers/cart/cart.action";
+import { toggleCart } from "../store/toolkit/cart/cart.slice";
 import { selectProductsCount } from "../store/reducers/cart/cart.selectors";
 
 const Header = () => {

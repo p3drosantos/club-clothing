@@ -4,7 +4,7 @@ import Product from "../types/product.types";
 
 import Button from "./Button";
 import { useDispatch } from "react-redux";
-import { addProductToCart } from "../store/reducers/cart/cart.action";
+import { addProductToCart } from "../store/toolkit/cart/cart.slice";
 
 interface ProductItemProps {
   product: Product;

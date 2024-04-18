@@ -9,7 +9,7 @@ import Header from "../../components/Header";
 import Button from "../../components/Button";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { clearCartProducts } from "../../store/reducers/cart/cart.action";
+import { clearCartProducts } from "../../store/toolkit/cart/cart.slice";
 
 const PaymentConfirmation = () => {
   const dispatch = useDispatch();

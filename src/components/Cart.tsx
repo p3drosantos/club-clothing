@@ -6,7 +6,7 @@ import CartItem from "./CartItem";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux.hooks";
 import { useDispatch } from "react-redux";
-import { toggleCart } from "../store/reducers/cart/cart.action";
+import { toggleCart } from "../store/toolkit/cart/cart.slice";
 import { selectProductsTotalPrice } from "../store/reducers/cart/cart.selectors";
 
 const Cart = () => {
@@ -41,7 +41,7 @@ const Cart = () => {
           <>
             <div className="flex justify-between items-center mb-4">
               <p className=" font-bold text-xl">Seu Carrinho</p>
-              <p onClick={toggleCart} className="hover:cursor-pointer">
+              <p onClick={toggleCart as any} className="hover:cursor-pointer">
                 <IoMdClose size={25} />
               </p>
             </div>
@@ -61,7 +61,7 @@ const Cart = () => {
           <>
             <div className="flex justify-between items-center mb-4">
               <p className=" font-bold text-xl">Seu Carrinho</p>
-              <p onClick={toggleCart} className="hover:cursor-pointer">
+              <p onClick={toggleCart as any} className="hover:cursor-pointer">
                 <IoMdClose size={25} />
               </p>
             </div>
