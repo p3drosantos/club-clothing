@@ -36,7 +36,7 @@ const Cart = () => {
       }`}
     >
       <div onClick={handleEscapeAreaClick} className="w-full"></div>
-      <div className="h-full min-w-[500px] z-200 bg-white p-5 overflow-scroll">
+      <div className="h-full lg:min-w-[500px] min-w-[85%] z-200 bg-white p-5 overflow-scroll">
         {products.length === 0 ? (
           <>
             <div className="flex justify-between items-center mb-4">
@@ -49,12 +49,14 @@ const Cart = () => {
               <img
                 src="/Cart-Image.png"
                 alt="empty-cart"
-                className="h-[180px]"
+                className="lg:h-[180px] h-[100px]"
               />
-              <p className="font-semibold text-xl">
+              <p className="font-semibold lg:text-xl">
                 O carrinho de compras está vazio.
               </p>
-              <p>faça login para ver o seu carrinho e comece a comprar.</p>
+              <p className=" text-nowrap ">
+                faça login para ver o seu carrinho.
+              </p>
             </div>
           </>
         ) : (

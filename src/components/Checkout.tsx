@@ -33,12 +33,12 @@ const Checkout = () => {
   return (
     <>
       {loading && <Loading />}
-      <div className="flex flex-col items-center py-8 overflow-hidden">
+      <div className="flex flex-col items-center py-8 overflow-hidden px-2">
         <p className=" text-xl font-bold">Checkout</p>
         {products.length > 0 ? (
           <>
             <div
-              className={`min-w-[650px] h-[480px] overflow-y-scroll my-4 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scrollbar ${
+              className={`lg:min-w-[650px] px-4 lg:px-0 min-w-[100%] h-[480px] overflow-y-scroll my-4 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thumb-slate-700 scrollbar-track-slate-300 overflow-y-scrollbar ${
                 products.length <= 2 && "scrollbar-none"
               }`}
             >
@@ -46,7 +46,7 @@ const Checkout = () => {
                 <CartItem key={product.id} product={product} />
               ))}
             </div>
-            <div className="flex flex-col min-w-[650px]">
+            <div className="flex flex-col lg:min-w-[650px] w-full p-3">
               <p className="text-xl font-bold pb-5">
                 Total: ${totalPriceProducts}
               </p>
