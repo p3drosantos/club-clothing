@@ -9,7 +9,7 @@ const CategoryOverView = ({ category }: CategoryOverViewProps) => {
   return (
     <div>
       <div className="flex flex-col w-full mt-5">
-        <p className=" font-extrabold text-xl lg:mb-[10px] lg:items-start lg:justify-start flex items-center justify-center mb-[15px]">
+        <p className=" font-bold text-xl lg:mb-[10px] lg:items-start lg:justify-start flex items-center justify-center mb-[15px]">
           {category.displayName}
         </p>
         <div className="flex flex-wrap w-full lg:justify-between items-center justify-center gap-10">

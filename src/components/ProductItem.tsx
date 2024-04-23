@@ -45,8 +45,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
         </div>
       </div>
       <div className="flex mt-1 justify-between">
-        <p className="font-medium text-[1rem]">{product.name}</p>
-        <p className="font-medium text-[1rem]">R${product.price}</p>
+        <p className="font-bold text-[1rem]">{product.name}</p>
+        <p className="font-bold text-[1rem]">R${product.price}</p>
       </div>
     </div>
   );
