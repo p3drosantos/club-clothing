@@ -28,7 +28,7 @@ const persistedRootReducer: typeof rootReducer = persistReducer(
 
 export const store = configureStore({
   reducer: persistedRootReducer,
-  middleware: [thunk] as any,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
 
 export const persistedStore = persistStore(store);

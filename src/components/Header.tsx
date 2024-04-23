@@ -44,13 +44,13 @@ const Header = () => {
   };
 
   return (
-    <div className="flex justify-between px-3 py-4 bg-[#212529] text-white items-center ">
-      <div className="hover:cursor-pointer">
-        <h2 className="text-2xl font-bold" onClick={handleHome}>
+    <div className="flex flex-col justify-between px-3 py-4 bg-[#212529] text-white items-center lg:flex lg:flex-row">
+      <div className="hover:cursor-pointer ">
+        <h2 className="text-2xl font-bold mb-4 lg:mb-0" onClick={handleHome}>
           CLUB CLOTHING
         </h2>
       </div>
-      <div className="flex gap-6 font-medium hover:cursor-pointer">
+      <div className="flex gap-6 font-medium hover:cursor-pointer items-center lg:justify-center justify-evenly">
         <p onClick={handleExplore}>Explorar</p>
         {!isAuthenticated && (
           <>
