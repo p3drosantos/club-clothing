@@ -22,13 +22,13 @@ const Categories = () => {
     <div className="h-full w-full">
       {isLoading && <Loading />}
 
-      <div className="grid grid-cols-2 gap-4 py-[20px] px-[30px] h-[91vh]">
+      <div className="lg:grid lg:grid-cols-2 flex flex-col items-center gap-4 py-[20px] px-[30px] lg:h-[91vh] h-full">
         {/* Renderizar a primeira e segunda fotos */}
         {categories.slice(0, 2).map((category: Category) => (
           <CategoryItem key={category.id} category={category} />
         ))}
         {/* Renderizar a terceira foto */}
-        <div className="col-span-2">
+        <div className="lg:col-span-2 h-full">
           {categories.length > 2 && (
             <CategoryItem key={categories[2].id} category={categories[2]} />
           )}

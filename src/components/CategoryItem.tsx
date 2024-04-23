@@ -23,7 +23,7 @@ const CategoryItem: FunctionComponent<CategoryItemProps> = ({ category }) => {
   };
   return (
     <div
-      className="flex items-center justify-center w-full gap-15 bg-cover bg-no-repeat bg-center rounded-lg shadow-md bg-opacity-30 blend-color sm:px-50 sm:h-300"
+      className="flex items-center justify-center lg:w-full gap-15 bg-cover bg-no-repeat bg-center rounded-lg shadow-md bg-opacity-30 blend-color sm:px-50 h-full w-[350px] aspect-square lg:aspect-[100/4]"
       style={backgroundImageStyle}
     >
       <div
