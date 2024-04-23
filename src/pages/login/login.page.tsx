@@ -59,7 +59,7 @@ const LoginPage = () => {
       console.log({ userCredentials });
     } catch (error) {
       const _error = error as AuthError;
-      if (_error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS) {
+      if (_error.code === AuthErrorCodes.INVALID_AUTH) {
         return setError("email", {
           type: "invalidCredentials",
           message: "E-mail ou senha inválidos.",
@@ -112,7 +112,7 @@ const LoginPage = () => {
 
       <div className="flex flex-col h-screen">
         <div className="h-full flex flex-col items-center justify-center">
-          <div className="flex flex-col items-center w-[450px] gap-5">
+          <div className="flex flex-col items-center lg:w-[450px] md:w-[450px] w-[90%] gap-5">
             <p className=" font-bold text-xl">Entre com a sua conta</p>
             <Button
               onClick={handleGoogleLogin}

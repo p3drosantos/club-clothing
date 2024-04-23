@@ -83,12 +83,12 @@ const SignUp = () => {
   const password = watch("password");
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen gap-4">
       <Header />
 
       {isLoading && <Loading />}
       <div className="h-full flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center w-[450px] gap-4">
+        <div className="flex flex-col items-center md:w-[450px] lg:w-[450px] w-[90%] gap-4">
           <p className="border-b border-solid border-primaryGray text-xl font-bold w-full items-center justify-center flex pb-5">
             Crie a sua conta
           </p>
